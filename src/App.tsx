@@ -1,15 +1,25 @@
 import React, {useState} from 'react';
-import Questions from './components/Questions'
+import Questions from './components/Questions';
+import { fetchQuestion, Difficulty, QuestionState } from './trivia-api';
+
+type AnswerObject = {
+  question: string;
+  answer: string;
+  correct: boolean;
+  correctAnswer: string;
+}
 
 const TOTAL_QUESTIONS = 10;
 
 function App() {
   const [loading, setLoading] = useState(false);
-  const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState<QuestionState[]>([]);
   const [number, setNumber] = useState(0);
-  const [userAnswers, setUserAnswers] = useState([]);
+  const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([]);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
+
+  console.log(fetchQuestion(TOTAL_QUESTIONS, Difficulty.EASY));
 
   const startQuiz = async () => {
 
@@ -33,11 +43,11 @@ function App() {
       <p className="loading">
         Loading Question . . . 
       </p>
-      <Questions 
+      {/*<Questions 
         questionNo={number+1} totalQuestions={TOTAL_QUESTIONS}
         question={questions[number].question} answers={questions[number].answers}
         userAnswer={userAnswers ? userAnswers[number] : undefined} callback={checkAnswer}
-      />
+      />*/}
       <button className="next" onClick={nextQuestion}>Next Question</button>
     </div>
   );
