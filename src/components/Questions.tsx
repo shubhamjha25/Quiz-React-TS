@@ -1,9 +1,30 @@
 import React from 'react';
 
-const Questions = () => {
+type Props = {
+    question: string;
+    answers: string[];
+    callback: any;
+    userAnswer: any;
+    questionNo: number;
+    totalQuestions: number;
+}
+
+const Questions: React.FC<Props> = ({question, answers, callback, userAnswer, questionNo, totalQuestions}) => {
     return (
         <div>
-            Questions
+            <p className="qstn-no">
+                Question: {questionNo} / {totalQuestions}
+            </p>
+            <p dangerouslySetInnerHTML={{ __html: question}}></p>
+            <div className="answer-wrap">
+                {answers.map(answer => (
+                    <div>
+                        <button disabled={userAnswer} onClick={callback}>
+                            <span dangerouslySetInnerHTML={{ __html: answer}} />
+                        </button>
+                    </div>
+            ))}
+            </div>
         </div>
     );
 }
